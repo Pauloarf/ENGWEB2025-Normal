@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <title>País - <%= pais %></title>
+  <link rel="stylesheet" href="/stylesheets/style.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #fafafa;
+      margin: 0;
+      padding: 0 1rem 2rem;
+      color: #222;
+    }
+    header {
+      background-color: #004d99;
+      color: white;
+      padding: 1rem 2rem;
+      text-align: center;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      margin-bottom: 2rem;
+    }
+    nav a {
+      color: #cce4ff;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    nav a:hover {
+      text-decoration: underline;
+    }
+    main {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    section {
+      margin-bottom: 3rem;
+      background: white;
+      padding: 1.5rem 2rem;
+      border-radius: 8px;
+      box-shadow: 0 0 8px rgba(0,0,0,0.05);
+    }
+    h2 {
+      border-bottom: 2px solid #004d99;
+      padding-bottom: 0.3rem;
+      margin-bottom: 1rem;
+      color: #004d99;
+    }
+    h3 {
+      margin-top: 1rem;
+      margin-bottom: 0.5rem;
+      color: #003366;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 0.5rem;
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 0.5rem 0.75rem;
+      text-align: left;
+    }
+    th {
+      background-color: #f0f8ff;
+      color: #004d99;
+    }
+    tr:nth-child(even) {
+      background-color: #f9fbff;
+    }
+    strong {
+      color: #d9534f;
+      margin-left: 0.5rem;
+    }
+    footer {
+      text-align: center;
+      margin-top: 3rem;
+      padding: 1rem 0;
+      color: #666;
+      font-size: 0.9rem;
+      border-top: 1px solid #ccc;
+    }
+    a {
+      color: #004d99;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    .edicao-container {
+      margin-bottom: 1.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid #ddd;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Detalhes do País: <%= pais %></h1>
+    <nav>
+      <a href="/">Início</a>
+    </nav>
+  </header>
+
+  <main>
+    <section>
+      <h2>Edições em que participou</h2>
+      <% if (!edicoesParticipou || edicoesParticipou.length === 0) { %>
+        <p>Não participou em nenhuma edição.</p>
+      <% } else { %>
+        <% edicoesParticipou.forEach(edicao => { %>
+          <div class="edicao-container">
+            <h3>
+              <a href="/<%= edicao.id %>">Edição ID: <%= edicao.id %></a> — Ano: <%= edicao.anoEdição %>
+              <% if (edicao.venceu) { %> <strong>(Venceu)</strong> <% } %>
+            </h3>
+            <% if (!edicao.musicas || edicao.musicas.length === 0) { %>
+              <p>Sem músicas associadas a este país nesta edição.</p>
+            <% } else { %>
+              <table>
+                <thead>
+                  <tr>
+                    <th>Nome da Música</th>
+                    <th>Intérprete</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% edicao.musicas.forEach(musica => { %>
+                    <tr>
+                      <td><%= musica.nome %></td>
+                      <td><%= musica.interprete %></td>
+                    </tr>
+                  <% }); %>
+                </tbody>
+              </table>
+            <% } %>
+          </div>
+        <% }); %>
+      <% } %>
+    </section>
+
+    <section>
+      <h2>Edições organizadas</h2>
+      <% if (!edicoesOrganizou || edicoesOrganizou.length === 0) { %>
+        <p>Este país não organizou nenhuma edição.</p>
+      <% } else { %>
+        <table>
+          <thead>
+            <tr>
+              <th>ID da Edição</th>
+              <th>Ano</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% edicoesOrganizou.forEach(edicao => { %>
+              <tr>
+                <td><a href="/<%= edicao.id %>"><%= edicao.id %></a></td>
+                <td><%= edicao.anoEdição %></td>
+              </tr>
+            <% }); %>
+          </tbody>
+        </table>
+      <% } %>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; <%= new Date().getFullYear() %></p>
+  </footer>
+</body>
+</html>

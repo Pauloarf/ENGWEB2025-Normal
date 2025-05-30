@@ -1,0 +1,39 @@
+Quantos registos estão na base de dados;
+db.edicoes.countDocuments({})
+
+Quantos edições têm "Ireland" como vencedor?
+db.edicoes.countDocuments({ vencedor: "Ireland" })
+
+Qual a lista de intérpretes (ordenada alfabeticamente e sem repetições)?
+db.edicoes.aggregate([
+  { $unwind: "$musicas" },
+  { $group: { _id: "$musicas.intérprete" } },
+  { $sort: { _id: 1 } },
+  { $project: { _id: 0, interprete: "$_id" } }
+])
+
+Qual a distribuição de músicas por edição (quantas músicas há em cada edição)?
+db.edicoes.aggregate([
+  {
+    $project: {
+      anoEdição: 1,
+      totalMusicas: { $size: "$musicas" }
+    }
+  },
+  {
+    $sort: { anoEdição: 1 }
+  }
+])
+
+Qual a distribuição de vitórias por país (quantas vitórias tem cada país)?
+db.edicoes.aggregate([
+  {
+    $group: {
+      _id: "$vencedor",
+      totalVitorias: { $sum: 1 }
+    }
+  },
+  {
+    $sort: { totalVitorias: -1 }
+  }
+])

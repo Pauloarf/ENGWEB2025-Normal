@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <title>Edição - <%= edicao.id %></title>
+  <link rel="stylesheet" href="/stylesheets/style.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #fafafa;
+      margin: 0;
+      padding: 0 1rem 2rem;
+      color: #222;
+    }
+    header {
+      background-color: #004d99;
+      color: white;
+      padding: 1rem 2rem;
+      text-align: center;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      margin-bottom: 2rem;
+    }
+    nav a {
+      color: white;
+      font-weight: 600;
+      text-decoration: none;
+      margin-left: 1rem;
+    }
+    nav a:hover {
+      text-decoration: underline;
+    }
+    main {
+      max-width: 700px;
+      margin: 0 auto;
+      background: white;
+      padding: 1.5rem 2rem;
+      border-radius: 8px;
+      box-shadow: 0 0 8px rgba(0,0,0,0.05);
+    }
+    h2 {
+      border-bottom: 2px solid #004d99;
+      padding-bottom: 0.3rem;
+      margin-bottom: 1rem;
+      color: #004d99;
+    }
+    ul {
+      list-style: none;
+      padding-left: 0;
+      margin-bottom: 2rem;
+    }
+    ul li {
+      margin-bottom: 0.5rem;
+      font-size: 1.1rem;
+    }
+    ul li strong {
+      color: #004d99;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 0.5rem 0.75rem;
+      text-align: left;
+    }
+    th {
+      background-color: #f0f8ff;
+      color: #004d99;
+    }
+    tr:nth-child(even) {
+      background-color: #f9fbff;
+    }
+    footer {
+      text-align: center;
+      margin-top: 3rem;
+      padding: 1rem 0;
+      color: #666;
+      font-size: 0.9rem;
+      border-top: 1px solid #ccc;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Detalhes da Edição</h1>
+    <nav>
+      <a href="/">Início</a>
+    </nav>
+  </header>
+
+  <main>
+    <h2>Edição ID: <%= edicao.id %></h2>
+    <ul>
+      <li><strong>Ano da Edição:</strong> <%= edicao.anoEdição %></li>
+      <li><strong>País Organizador:</strong> <%= edicao.organizacao %></li>
+      <li><strong>País Vencedor:</strong> <%= edicao.vencedor %></li>
+    </ul>
+
+    <h3>Músicas</h3>
+    <% if (!edicao.musicas || edicao.musicas.length === 0) { %>
+      <p>Sem músicas registadas.</p>
+    <% } else { %>
+      <table>
+        <thead>
+          <tr>
+            <th>Nome da Música</th>
+            <th>Intérprete</th>
+            <th>País que Representa</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% edicao.musicas.forEach(musica => { %>
+            <tr>
+              <td><%= musica.nome %></td>
+              <td><%= musica.interprete %></td>
+              <td><%= musica.pais %></td>
+            </tr>
+          <% }); %>
+        </tbody>
+      </table>
+    <% } %>
+  </main>
+
+  <footer>
+    <p>&copy; <%= new Date().getFullYear() %></p>
+  </footer>
+</body>
+</html>

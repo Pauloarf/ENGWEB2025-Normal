@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    <meta name="description" content="Lista completa de edições de música com links para páginas detalhadas.">
+    <meta name="author" content="Tua App">
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #fafafa;
+        margin: 0;
+        padding: 0 1rem 2rem;
+        color: #222;
+      }
+      header {
+        background-color: #004d99;
+        color: white;
+        padding: 1rem 2rem;
+        text-align: center;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        margin-bottom: 2rem;
+      }
+      main {
+        max-width: 900px;
+        margin: 0 auto;
+        background: white;
+        padding: 1.5rem 2rem;
+        border-radius: 8px;
+        box-shadow: 0 0 8px rgba(0,0,0,0.05);
+      }
+      h2 {
+        border-bottom: 2px solid #004d99;
+        padding-bottom: 0.3rem;
+        margin-bottom: 1.5rem;
+        color: #004d99;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      th, td {
+        border: 1px solid #ddd;
+        padding: 0.5rem 0.75rem;
+        text-align: left;
+      }
+      th {
+        background-color: #f0f8ff;
+        color: #004d99;
+      }
+      tr:nth-child(even) {
+        background-color: #f9fbff;
+      }
+      a {
+        color: #004d99;
+        text-decoration: none;
+        font-weight: 600;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+      footer {
+        text-align: center;
+        margin-top: 3rem;
+        padding: 1rem 0;
+        color: #666;
+        font-size: 0.9rem;
+        border-top: 1px solid #ccc;
+      }
+    </style>
+</head>
+<body>
+    <header>
+        <h1><%= title %></h1>
+    </header>
+
+    <main>
+        <% if (!edicoes || edicoes.length === 0) { %>
+            <p>Nenhuma edição encontrada.</p>
+        <% } else { %>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID da Edição</th>
+                        <th>Ano da Edição</th>
+                        <th>País Organizador</th>
+                        <th>País Vencedor</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% edicoes.forEach(edicao => { %>
+                        <tr>
+                            <td><a href="/<%= edicao.id %>"><%= edicao.id %></a></td>
+                            <td><%= edicao.anoEdição %></td>
+                            <td><a href="/paises/<%= encodeURIComponent(edicao.organizacao) %>"><%= edicao.organizacao %></a></td>
+                            <td><a href="/paises/<%= encodeURIComponent(edicao.vencedor) %>"><%= edicao.vencedor %></a></td>
+                        </tr>
+                    <% }); %>
+                </tbody>
+            </table>
+        <% } %>
+    </main>
+
+    <footer>
+        <p>&copy; <%= new Date().getFullYear() %></p>
+    </footer>
+</body>
+</html>
