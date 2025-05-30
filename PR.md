@@ -18,6 +18,12 @@ O processo realizado incluiu os seguintes passos:
 - Coleção: `edicoes`
 - Número de documentos importados: 65
 - A normalização efetuada foi mínima, focada na manutenção da integridade dos dados sem conversões profundas.
+- Alterações específicas realizadas:
+  - Removido o objeto mais externo que continha as edições como pares chave-valor, onde a key era o ID da edição (ex: "edxxx") e o value era o objeto da edição propriamente dito.
+  - A estrutura foi convertida para uma lista de objetos `edicao`, cada um contendo o campo `id` como parte do seu conteúdo.  
+    Deste modo, ao invés de um objeto com múltiplas propriedades onde cada propriedade é uma edição, temos uma lista homogénea de objetos completos.
+  - Algumas chaves (fields) que existiam em algumas edições estavam ausentes noutras. Para garantir consistência, todas as chaves possíveis foram incluídas em todas as edições, preenchendo com `null` nos casos onde não existiam dados.
+
 
 ## 2. Instruções para Execução das Aplicações
 
